@@ -33,8 +33,8 @@
                     <td><input type="text" name="product_price" class="form-control"></td>
                 </tr>
                 <tr>
-                    <th>Ürün Görseli:</th>
-                    <input type="text" name="product_image" class="form-control">
+                    <th>Görsel URL:</th>
+                    <td><input type="text" name="product_image" class="form-control"></td>
                 </tr>
                 <tr>
                     <th>Ürün Tipi:</th>

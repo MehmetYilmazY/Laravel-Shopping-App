@@ -16,7 +16,8 @@ public function create()
     $brands = Brand::all();
     $types = Type::all();
     $materials = Material::all();
-    return view('createproduct', compact('brands','types','materials'));
+    $products = Product::all();
+    return view('createproduct', compact('brands','types','materials','products'));
 }
 
 
