@@ -8,9 +8,28 @@ use App\Models\Brand;
 use App\Models\Type;
 use App\Models\Material;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+
+public function index()
+{    
+    $brands = Brand::all();
+    $types = Type::all();
+    $materials = Material::all();
+    $products = Product::all();
+    return view('homepage', compact('brands','types','materials','products'));
+}
+
+public function tumUrunler()
+{    
+    $brands = Brand::all();
+    $types = Type::all();
+    $materials = Material::all();
+    $products = Product::all();
+    return view('allproducts', compact('brands','types','materials','products'));
+}
 public function create()
 {
     $brands = Brand::all();
@@ -19,6 +38,35 @@ public function create()
     $products = Product::all();
     return view('createproduct', compact('brands','types','materials','products'));
 }
+
+ public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'product_name' => 'required',
+            'product_desc' => 'required',
+            'product_price' => 'required',
+            'product_image' => 'nullable',
+            'product_category' => 'nullable',
+            'product_quantity' => 'nullable',
+            'product_brand' => 'nullable',
+            'product_color' => 'nullable',
+            'product_size' => 'nullable',
+            'product_material' => 'nullable',
+            'product_origin' => 'nullable',
+            'product_type' => 'nullable',
+            'product_status' => 'nullable'
+        ]);
+
+        $product = new Product($validatedData);
+        $product->product_image = $request->input('product_image');
+        $product_type = $request->input('product_type', []);
+        $product_type = implode(',', $product_type);
+
+        $product->save();
+
+        
+        return redirect()->route('product.create')->with('success', 'Ürün başarıyla eklendi.');
+    }
 
 
     public function allProducts()
@@ -46,32 +94,7 @@ public function create()
         return redirect()->route('products.allProducts')->with('success', 'Ürün başarıyla güncellendi.');
     }
 
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'product_name' => 'required',
-            'product_desc' => 'required',
-            'product_price' => 'required|numeric',
-            'product_image' => 'nullable',
-            'product_category' => 'nullable',
-            'product_quantity' => 'nullable',
-            'product_brand' => 'nullable',
-            'product_color' => 'nullable',
-            'product_size' => 'nullable',
-            'product_material' => 'nullable',
-            'product_origin' => 'nullable',
-            'product_type' => 'nullable',
-            'product_status' => 'nullable'
-        ]);
-
-        // Assuming 'product_brand' is the correct input name from your form
-        $product = new Product($validatedData);
-        $product->product_image = $request->input('product_image_url');
-        $product->save();
-        
-        return redirect()->route('product.create')->with('success', 'Ürün başarıyla eklendi.');
-    }
-
+   
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
@@ -151,4 +174,27 @@ public function create()
 
         return redirect()->back()->with('success', 'Marka başarıyla eklendi.');
     }
+
+
+public function show($id)
+{
+    // Fetch the product based on the provided $id
+    $products = Product::find($id);
+
+    // Check if the product exists
+    if (!$products) {
+        abort(404); // Product not found, return 404 error
+    }
+
+    // Other related data if needed
+    $brands = Brand::all();
+    $types = Type::all();
+    $materials = Material::all();
+
+    $relatedProducts = Product::inRandomOrder()->limit(4)->get();
+
+    // Pass the data to the view
+    return view('show', compact('products', 'brands', 'types', 'materials','relatedProducts'));
+}
+
 }

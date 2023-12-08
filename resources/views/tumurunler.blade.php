@@ -3,11 +3,11 @@
 @section('content')
 <div class="container">
 
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <h2>Ürün Listesi</h2>
     <table class="table table-bordered">
@@ -44,7 +44,7 @@
                 </td>
                 <td>{{ $product->product_quantity }}</td>
                 <td>{{ $product->product_brand }}</td>
-                <td>{{ $product->product_color }}</td>
+                <td style="color: {{ $product->product_color }};">{{ $product->product_color }}</td>
                 <td>{{ $product->product_material }}</td>
                 <td>{{ $product->product_status }}</td>
                 <!-- Diğer sütunları ekleyin -->
@@ -52,12 +52,12 @@
                     <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">Düzenle</a>
                 </td>
                 <td>
-                 <form action="{{ route('products.destroy', $product->id) }}" method="post" onsubmit="return confirm('Emin misiniz?')">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Sil</button>
+                    <form action="{{ route('products.destroy', $product->id) }}" method="post" onsubmit="return confirm('Emin misiniz?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Sil</button>
                     </form>
-</td>
+                </td>
             </tr>
             @endforeach
         </tbody>

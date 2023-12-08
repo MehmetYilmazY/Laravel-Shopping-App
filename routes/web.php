@@ -19,9 +19,12 @@ Route::get('/', function () {
     return view('homepage');
 });
 
-Route::get('/detay', function () {
-    return view('detail');
-});
+Route::get('/', [ProductController::class, 'index'])->name('products.index');
+
+
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/tum-urunler', [ProductController::class, 'tumUrunler'])->name('products.index');
+
 
 Route::get('/home', function () {
     return view('home');

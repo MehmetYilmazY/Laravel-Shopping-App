@@ -51,12 +51,13 @@
             <label for="product_color" class="form-label">Ürün Rengi:</label>
             <input type="color" name="product_color" value="{{ $product->product_color }}" class="form-control">
         </div>
-
-        <div class="mb-3">
-            <label for="product_status" class="form-label">Stok Durumu:</label>
-            <select name="product_status" id="product_status" class="form-control">
-                <option value="StokVar" {{ $product->product_status === 'StokVar' ? 'selected' : '' }}>Stokta Var</option>
-                <option value="StokYok" {{ $product->product_status === 'StokYok' ? 'selected' : '' }}>Stokta Yok</option>
+        
+                <div class="mb-3">
+            <label for="product_type" class="form-label">Çıkacağı Yer:</label>
+            <select name="product_type" id="product_type" class="form-control">
+                <option value="Anasayfa" {{ $product->product_type === 'Anasayfa' ? 'selected' : '' }}>Anasayfa</option>
+                <option value="Populer" {{ $product->product_type === 'Populer' ? 'selected' : '' }}>Popüler Ürünler</option>
+                <option value="NewDrop" {{ $product->product_type === 'NewDrop' ? 'selected' : '' }}>Yeni Düşenler</option>
             </select>
         </div>
 
@@ -64,6 +65,8 @@
             <label for="product_quantity" class="form-label">Ürün Stoğu:</label>
             <input type="number" name="product_quantity" value="{{ $product->product_quantity }}" class="form-control">
         </div>
+
+
 
         <button type="submit" class="btn btn-primary">Güncelle</button>
     </form>
