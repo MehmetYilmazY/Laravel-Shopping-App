@@ -17,16 +17,16 @@ return new class extends Migration
             $table->string('product_name');
             $table->string('product_desc');
             $table->string('product_price');
-            $table->string('product_image');
-            $table->string('product_category');
-            $table->string('product_quantity');
-            $table->string('product_brand');
-            $table->string('product_color');
-            $table->string('product_size');
-            $table->string('product_material');
-            $table->string('product_origin');
-            $table->string('product_type');
-            $table->string('product_status');
+            $table->file('product_image')->store('products')->nullable();
+            $table->string('product_category')->nullable();
+            $table->string('product_quantity')->nullable();
+            $table->string('product_brand')->nullable();
+            $table->string('product_color')->nullable();
+            $table->string('product_size')->nullable();
+            $table->string('product_material')->nullable();
+            $table->string('product_origin')->nullable();
+            $table->string('product_type')->nullable();
+            $table->string('product_status')->nullable();
     });
     
     }
