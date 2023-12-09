@@ -9,6 +9,8 @@ use App\Models\Type;
 use App\Models\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+
 
 class ProductController extends Controller
 {
@@ -22,6 +24,15 @@ public function index()
     return view('homepage', compact('brands','types','materials','products'));
 }
 
+public function cartObjects()
+{    
+    $brands = Brand::all();
+    $types = Type::all();
+    $materials = Material::all();
+    $products = Product::all();
+    return view('cart', compact('brands','types','materials','products'));
+}
+
 public function tumUrunler()
 {    
     $brands = Brand::all();
@@ -29,6 +40,24 @@ public function tumUrunler()
     $materials = Material::all();
     $products = Product::all();
     return view('allproducts', compact('brands','types','materials','products'));
+}
+
+public function populerUrunler()
+{    
+    $brands = Brand::all();
+    $types = Type::all();
+    $materials = Material::all();
+    $products = Product::all();
+    return view('populer', compact('brands','types','materials','products'));
+}
+
+public function yeniUrunler()
+{    
+    $brands = Brand::all();
+    $types = Type::all();
+    $materials = Material::all();
+    $products = Product::all();
+    return view('yeniurunler', compact('brands','types','materials','products'));
 }
 public function create()
 {
@@ -196,5 +225,51 @@ public function show($id)
     // Pass the data to the view
     return view('show', compact('products', 'brands', 'types', 'materials','relatedProducts'));
 }
+
+
+     public function addToCart(Request $request)
+{
+    $productId = $request->input('productId');
+    $quantity = $request->input('quantity');
+
+    // Ürün bilgilerini veritabanından alınması gerekiyor
+    $product = Product::find($productId);
+
+    // Sepet oturum değişkenini kontrol et ve oluştur
+    $cart = Session::get('cart', []);
+
+    // Eğer ürün daha önce eklenmemişse, ekleyin
+    if (!array_key_exists($productId, $cart)) {
+        $cart[$productId] = [
+            'name' => $product->product_name,
+            'price' => $product->product_price,
+            'quantity' => $quantity,
+            'image' => $product->product_image,
+        ];
+    } else {
+        // Eğer ürün zaten eklenmişse, miktarı güncelle
+        $cart[$productId]['quantity'] += $quantity;
+    }
+
+    // Güncellenmiş sepeti oturum değişkenine kaydet
+    Session::put('cart', $cart);
+
+    return redirect()->back()->with('success', 'Ürün sepete eklendi.');
+}
+    public function cart()
+    {
+        // Sepet oturum değişkenini al
+        $cart = Session::get('cart', []);
+
+        // Eğer sepet bilgisi yoksa, boş bir dizi oluştur
+        $cart = is_array($cart) ? $cart : [];
+
+        // Diğer işlemler buraya eklenebilir
+
+        // Örnek: Tüm ürünleri al
+        $products = Product::all();
+
+        return view('cart', compact('cart', 'products'));
+    }
 
 }

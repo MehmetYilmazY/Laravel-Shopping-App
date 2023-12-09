@@ -6,10 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>SneaksVibe | {{ $products->product_name  }}</title>
+        <title>SneaksVibe - Yeni Ürünler</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -21,9 +20,15 @@
 <body>
     @include('layouts.header')
 
-    @include('layouts.product')
-
-    @include('layouts.related')
+<header style="background-color: #6610f2;" class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Yeni Ürünler</h1>
+            <p class="lead fw-normal text-white-50 mb-0"> "SneakVibe."</p>
+        </div>
+    </div>
+</header>
+    @include('layouts.newproducts')
 
     @include('layouts.footer')
 </body>

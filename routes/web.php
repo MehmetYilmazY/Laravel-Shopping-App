@@ -19,11 +19,23 @@ Route::get('/', function () {
     return view('homepage');
 });
 
+Route::get('/hakkimizda', function () {
+    return view('about');
+});
+
+
+Route::get('/sepet', [ProductController::class, 'cartObjects'])->name('cart');
+
+
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
+Route::post('/sepet', [ProductController::class, 'addToCart'])->name('addToCart');
 
 
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/tum-urunler', [ProductController::class, 'tumUrunler'])->name('products.index');
+Route::get('/populer-urunler', [ProductController::class, 'populerUrunler'])->name('populer');
+Route::get('/yeni-urunler', [ProductController::class, 'yeniUrunler'])->name('yeniurunler');
+
 
 
 Route::get('/home', function () {
